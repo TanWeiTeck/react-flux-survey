@@ -1,5 +1,5 @@
 .container {
-    border: solid lightgrey;
+    border: 1px solid lightgrey;
     box-shadow: 5px 10px 8px lightgrey;
     padding: 0.5rem;
     max-width: 30rem;

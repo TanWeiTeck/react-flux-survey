@@ -2,7 +2,7 @@ button {
     background-color: black;
     padding: 0.6rem 2.5rem;
     color: white;
-    border: solid black;
+    border: 1px solid black;
     text-transform: uppercase;
     font-size: 0.6rem;
     font-weight: 600;
