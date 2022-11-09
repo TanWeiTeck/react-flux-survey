@@ -1,0 +1,30 @@
+.container {
+    border: solid lightgrey;
+    box-shadow: 5px 10px 8px lightgrey;
+    padding: 0.5rem;
+    max-width: 30rem;
+    margin: auto;
+    margin-top: 5rem;
+}
+.container .title {
+    font-size: large;
+    font-weight: 700;
+    text-align: left;
+    padding-bottom: 1rem;
+    border-bottom: solid 1px lightgrey;
+}
+
+.container form {
+    margin-top: 1rem;
+}
+.container .footer {
+    /* background-color: yellow; */
+    border-top: solid 1px lightgrey;
+    padding-top: 0.8rem;
+    display: flex;
+    justify-content: end;
+}
+
+.footer Button {
+    margin-left: 0.5rem;
+}

@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container label {
+    text-align: left;
+}
+
+.container input {
+    margin: 1rem 0rem;
+    padding: 0.5rem;
+}
