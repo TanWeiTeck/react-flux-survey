@@ -36,14 +36,15 @@ const QuestionPage = () => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        setQuestionIndex(questionIndex + 1);
+        setQuestionIndex(+questionIndex + 1);
     };
 
     const handleBack = () => {
-        if (questionIndex === 0) {
+        console.log('questionIndex :>> ', questionIndex);
+        if (+questionIndex === 0) {
             resetUser();
         } else {
-            setQuestionIndex(questionIndex - 1);
+            setQuestionIndex(+questionIndex - 1);
         }
     };
 

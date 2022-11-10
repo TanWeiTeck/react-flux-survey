@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import Card from '../../components/Card/Card';
-// import { useCookies } from 'react-cookie';
 
 import styles from './WelcomePage.module.css';
 import UserContext from '../../contexts/UserContext';
