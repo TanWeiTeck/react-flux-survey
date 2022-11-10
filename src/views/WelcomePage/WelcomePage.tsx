@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Card from '../../components/Card/Card';
 // import { useCookies } from 'react-cookie';
 

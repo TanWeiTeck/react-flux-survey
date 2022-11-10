@@ -78,7 +78,7 @@ export const QuestionContextProvider = (props: any) => {
 
     useEffect(() => {
         setQuestionIndexCookies(questionIndex);
-    }, [questionIndex]);
+    }, [questionIndex, setQuestionIndexCookies]);
 
     return (
         <QuestionContext.Provider
