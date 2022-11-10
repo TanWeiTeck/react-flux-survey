@@ -1,4 +1,3 @@
-// import React from 'react';
 import Button from '../Button';
 import styles from './Card.module.css';
 
@@ -7,6 +6,7 @@ type CardProps = {
     subTitle?: string;
     content?: any;
     onSubmit?: any;
+    onCancel?: () => void;
     okText?: any;
     cancelText?: any;
     btnDisable?: any;
@@ -15,7 +15,7 @@ type CardProps = {
 const Card: React.FC<CardProps> = (props) => {
     return (
         <div className={styles.container}>
-            <div>
+            <div className={styles.header}>
                 <div className={styles.title}>{props.title}</div>
                 <div className={styles.subtitle}>{props.subTitle}</div>
             </div>
@@ -23,7 +23,11 @@ const Card: React.FC<CardProps> = (props) => {
                 {props.content}
                 <footer className={styles.footer}>
                     {props.cancelText && (
-                        <Button type="button" color="white">
+                        <Button
+                            type="button"
+                            onClick={props.onCancel}
+                            color="white"
+                        >
                             {props.cancelText}
                         </Button>
                     )}

@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Card from '../../components/Card/Card';
+// import { useCookies } from 'react-cookie';
+
 import styles from './WelcomePage.module.css';
+import UserContext from '../../contexts/UserContext';
+import QuestionContext from '../../contexts/QuestionContext';
 
 const WelcomePage = () => {
-    const [userEmail, setUserEmail] = useState('');
-    console.log('userEmail :>> ', userEmail);
+    const { userEmail, setUserEmail } = useContext(UserContext);
+    const { removeCookies } = useContext(QuestionContext);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-
-        console.log('userEmail', userEmail);
+        window.location.assign('/question');
     };
 
     const disableButton =
@@ -22,9 +25,13 @@ const WelcomePage = () => {
             </label>
             <input
                 type="email"
-                onChange={(event) => setUserEmail(event.target.value)}
+                onChange={(event) => {
+                    setUserEmail(event.target.value);
+                    removeCookies('question_history');
+                }}
                 placeholder="email"
                 autoFocus={true}
+                value={userEmail}
             />
         </div>
     );
@@ -38,7 +45,6 @@ const WelcomePage = () => {
             onSubmit={handleSubmit}
             btnDisable={disableButton}
             okText={'start'}
-            cancelText={'back'}
         />
     );
 };

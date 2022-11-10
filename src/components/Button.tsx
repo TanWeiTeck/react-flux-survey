@@ -5,6 +5,7 @@ type ButtonProps = {
     type: 'submit' | 'button' | 'reset';
     disabled?: boolean;
     children?: JSX.Element;
+    onClick?: () => void;
 };
 
 const Button = ({ ...props }: ButtonProps) => {
@@ -13,6 +14,7 @@ const Button = ({ ...props }: ButtonProps) => {
             className={props.color}
             type={props.type}
             disabled={props.disabled}
+            onClick={props.onClick}
         >
             {props.children || 'button'}
         </button>

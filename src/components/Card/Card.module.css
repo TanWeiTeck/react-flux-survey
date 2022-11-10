@@ -6,12 +6,15 @@
     margin: auto;
     margin-top: 5rem;
 }
-.container .title {
-    font-size: large;
-    font-weight: 700;
+.container .header {
     text-align: left;
     padding-bottom: 1rem;
     border-bottom: solid 1px lightgrey;
+}
+
+.container .title {
+    font-size: large;
+    font-weight: 700;
 }
 
 .container form {
@@ -23,8 +26,9 @@
     padding-top: 0.8rem;
     display: flex;
     justify-content: end;
+    column-gap: 0.5rem;
 }
 
-.footer Button {
+/* .footer Button {
     margin-left: 0.5rem;
-}
+} */
