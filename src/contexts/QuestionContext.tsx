@@ -42,8 +42,6 @@ type QuestionContextType = {
     score: number;
     setScore: React.Dispatch<React.SetStateAction<number>>;
     setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
-    setQuestionIndexCookies: any;
-    removeCookies: any;
 };
 const QuestionContext = createContext<QuestionContextType>({
     questionIndex: 0,
@@ -51,34 +49,19 @@ const QuestionContext = createContext<QuestionContextType>({
     score: 0,
     setScore: () => {},
     setQuestionIndex: () => {},
-    setQuestionIndexCookies: () => {},
-
-    removeCookies: () => {},
 });
 
 export const QuestionContextProvider = (props: any) => {
-    const [cookies, setCookies, removeCookies] = useCookies([
-        'user_email',
-        'question_history',
-    ]);
+    const [cookies, setCookie] = useCookies(['question_history']);
     const [questionIndex, setQuestionIndex] = useState(
         cookies.question_history || 0
     );
     const [score, setScore] = useState(0);
     const data = questionList[questionIndex];
 
-    const setQuestionIndexCookies = (props: any) =>
-        setCookies('question_history', props);
-
-    // useEffect(() => {
-    //     cookies.question_history
-    //         ? setQuestionIndex(+cookies.question_history)
-    //         : setQuestionIndexCookies(0);
-    // }, [setCookies, cookies.question_history]);
-
     useEffect(() => {
-        setQuestionIndexCookies(questionIndex);
-    }, [questionIndex, setQuestionIndexCookies]);
+        setCookie('question_history', questionIndex);
+    }, [questionIndex, setCookie]);
 
     return (
         <QuestionContext.Provider
@@ -87,9 +70,7 @@ export const QuestionContextProvider = (props: any) => {
                 questionIndex,
                 setScore,
                 score,
-                setQuestionIndexCookies,
                 setQuestionIndex,
-                removeCookies,
             }}
         >
             {props.children}

@@ -42,21 +42,23 @@ const QuestionPage = () => {
     const handleBack = () => {
         console.log('questionIndex :>> ', questionIndex);
         if (+questionIndex === 0) {
-            resetUser();
+            resetUser('/');
         } else {
             setQuestionIndex(+questionIndex - 1);
         }
     };
 
     return (
-        <Card
-            subTitle={data.title}
-            content={cardContent(data.options)}
-            okText={'next'}
-            cancelText={'back'}
-            onCancel={handleBack}
-            onSubmit={handleSubmit}
-        />
+        <>
+            <Card
+                subTitle={data.title}
+                content={cardContent(data.options)}
+                okText={'next'}
+                cancelText={'back'}
+                onCancel={handleBack}
+                onSubmit={handleSubmit}
+            />
+        </>
     );
 };
 

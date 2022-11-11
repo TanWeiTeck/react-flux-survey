@@ -3,11 +3,9 @@ import Card from '../../components/Card/Card';
 
 import styles from './WelcomePage.module.css';
 import UserContext from '../../contexts/UserContext';
-import QuestionContext from '../../contexts/QuestionContext';
 
 const WelcomePage = () => {
-    const { userEmail, setUserEmail } = useContext(UserContext);
-    const { removeCookies } = useContext(QuestionContext);
+    const { userEmail, setUserEmail, resetUser } = useContext(UserContext);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -25,8 +23,8 @@ const WelcomePage = () => {
             <input
                 type="email"
                 onChange={(event) => {
+                    resetUser();
                     setUserEmail(event.target.value);
-                    removeCookies('question_history');
                 }}
                 placeholder="email"
                 autoFocus={true}

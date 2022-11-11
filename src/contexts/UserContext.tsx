@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 type UserContextType = {
     userEmail: string;
     setUserEmail: React.Dispatch<React.SetStateAction<string>>;
-    resetUser: () => void;
+    resetUser: (redirectPath?: string) => void;
 };
 
 const UserContext = createContext<UserContextType>({
@@ -14,20 +14,21 @@ const UserContext = createContext<UserContextType>({
 });
 
 export const UserContextProvider = (props: any) => {
-    const [cookies, setCookies, removeCookies] = useCookies([
+    const [cookies, setCookie, removeCookie] = useCookies([
         'user_email',
         'question_history',
+        'question_history2',
     ]);
     const [userEmail, setUserEmail] = useState(cookies.user_email || '');
 
     useEffect(() => {
-        userEmail && setCookies('user_email', userEmail);
-    }, [userEmail, setCookies]);
+        userEmail && setCookie('user_email', userEmail);
+    }, [userEmail, setCookie]);
 
-    const resetUser = () => {
-        removeCookies('user_email');
-        removeCookies('question_history');
-        window.location.assign('/');
+    const resetUser = (redirectPath?: string) => {
+        removeCookie('user_email');
+        removeCookie('question_history');
+        redirectPath && window.location.assign(redirectPath);
     };
 
     return (
