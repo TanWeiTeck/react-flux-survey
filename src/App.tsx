@@ -6,7 +6,7 @@ import QuestionPage from './views/QuestionPage/QuestionPage';
 import WelcomePage from './views/WelcomePage/WelcomePage';
 
 function App() {
-    const { userEmail } = useContext(UserContext);
+    const { userInfo } = useContext(UserContext);
 
     return (
         <BrowserRouter>
@@ -16,7 +16,7 @@ function App() {
                     <Route
                         path="/question"
                         element={
-                            !userEmail ? (
+                            !(userInfo.email && userInfo.name) ? (
                                 <Navigate to={'/'} replace />
                             ) : (
                                 <QuestionPage />

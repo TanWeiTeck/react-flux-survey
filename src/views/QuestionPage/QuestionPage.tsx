@@ -8,7 +8,7 @@ import styles from './QuestionPage.module.css';
 
 const QuestionPage = () => {
     console.log('renderquestionpage :>> ');
-    const { data, questionIndex, setQuestionIndex } =
+    const { question, maxQuestions, questionIndex, setQuestionIndex } =
         useContext(QuestionContext);
 
     const { resetUser } = useContext(UserContext);
@@ -36,7 +36,9 @@ const QuestionPage = () => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        setQuestionIndex(+questionIndex + 1);
+        if (maxQuestions !== questionIndex + 1) {
+            setQuestionIndex(+questionIndex + 1);
+        } else console.log('end');
     };
 
     const handleBack = () => {
@@ -51,8 +53,8 @@ const QuestionPage = () => {
     return (
         <>
             <Card
-                subTitle={data.title}
-                content={cardContent(data.options)}
+                subTitle={question.title}
+                content={cardContent(question.options)}
                 okText={'next'}
                 cancelText={'back'}
                 onCancel={handleBack}

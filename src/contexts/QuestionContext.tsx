@@ -38,14 +38,16 @@ export type QuestionListType = {
 
 type QuestionContextType = {
     questionIndex: number;
-    data: QuestionListType;
+    question: QuestionListType;
+    maxQuestions: number;
     score: number;
     setScore: React.Dispatch<React.SetStateAction<number>>;
     setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 const QuestionContext = createContext<QuestionContextType>({
     questionIndex: 0,
-    data: questionList[0],
+    question: questionList[0],
+    maxQuestions: questionList.length,
     score: 0,
     setScore: () => {},
     setQuestionIndex: () => {},
@@ -57,7 +59,8 @@ export const QuestionContextProvider = (props: any) => {
         cookies.question_history || 0
     );
     const [score, setScore] = useState(0);
-    const data = questionList[questionIndex];
+    const question = questionList[questionIndex];
+    const maxQuestions = questionList.length;
 
     useEffect(() => {
         setCookie('question_history', questionIndex);
@@ -66,8 +69,9 @@ export const QuestionContextProvider = (props: any) => {
     return (
         <QuestionContext.Provider
             value={{
-                data,
+                question,
                 questionIndex,
+                maxQuestions,
                 setScore,
                 score,
                 setQuestionIndex,
