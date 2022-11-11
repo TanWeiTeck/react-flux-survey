@@ -7,25 +7,28 @@ import UserContext from '../../contexts/UserContext';
 import styles from './QuestionPage.module.css';
 
 const QuestionPage = () => {
-    console.log('renderquestionpage :>> ');
-    const { question, maxQuestions, questionIndex, setQuestionIndex } =
-        useContext(QuestionContext);
+    const {
+        question,
+        maxQuestions,
+        questionIndex,
+        setQuestionIndex,
+        setSelection,
+        updateResult,
+    } = useContext(QuestionContext);
 
     const { resetUser } = useContext(UserContext);
-
     const cardContent = (options: QuestionListType['options']) => (
         <>
-            {options.map((item, index) => (
-                <label className={styles.option} key={index}>
+            {options.map((item) => (
+                <label className={styles.option} key={item.id + questionIndex}>
                     <input
                         type="radio"
-                        id="id"
-                        name="question"
+                        name={question.id.toString()}
+                        id={item.id}
                         value={item.value}
                         required
                         onChange={(event) => {
-                            console.log('event', event);
-                            // setAnswerCheck(event.target.value);
+                            setSelection(event.target.value === 'true');
                         }}
                     />
                     <div>{item.label}</div>
@@ -36,19 +39,26 @@ const QuestionPage = () => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
+        updateResult();
         if (maxQuestions !== questionIndex + 1) {
-            setQuestionIndex(+questionIndex + 1);
-        } else console.log('end');
+            setQuestionIndex(questionIndex + 1);
+        } else {
+            setQuestionIndex(0);
+            window.location.assign('/result');
+        }
     };
 
     const handleBack = () => {
-        console.log('questionIndex :>> ', questionIndex);
-        if (+questionIndex === 0) {
+        updateResult('revert');
+        if (questionIndex === 0) {
             resetUser('/');
         } else {
-            setQuestionIndex(+questionIndex - 1);
+            setQuestionIndex(questionIndex - 1);
         }
     };
+
+    const progressPercentage =
+        ((+questionIndex + 1) / +maxQuestions) * 100 + '%';
 
     return (
         <>
@@ -59,6 +69,8 @@ const QuestionPage = () => {
                 cancelText={'back'}
                 onCancel={handleBack}
                 onSubmit={handleSubmit}
+                progressBar={true}
+                progress={progressPercentage}
             />
         </>
     );

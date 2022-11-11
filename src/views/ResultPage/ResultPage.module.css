@@ -1,0 +1,14 @@
+.bold {
+    font-size: 0.9rem;
+
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.description {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+}
+.email {
+    font-weight: 700;
+}

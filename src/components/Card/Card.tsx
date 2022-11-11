@@ -10,11 +10,22 @@ type CardProps = {
     okText?: any;
     cancelText?: any;
     btnDisable?: any;
+    progressBar?: boolean;
+    progress?: string;
 };
 
 const Card: React.FC<CardProps> = (props) => {
     return (
         <div className={styles.container}>
+            {props.progressBar && (
+                <div className={styles.progressbarcontainer}>
+                    <div
+                        className={styles.progressbar}
+                        style={{ width: props.progress }}
+                    ></div>
+                </div>
+            )}
+
             <div className={styles.header}>
                 <div className={styles.title}>{props.title}</div>
                 <div className={styles.subtitle}>{props.subTitle}</div>

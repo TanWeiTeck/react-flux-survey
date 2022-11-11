@@ -22,7 +22,7 @@ export const UserContextProvider = (props: any) => {
     const [cookies, setCookie, removeCookie] = useCookies([
         'user_info',
         'question_history',
-        'question_history2',
+        'result',
     ]);
 
     const [userInfo, setUserInfo] = useState(
@@ -39,6 +39,7 @@ export const UserContextProvider = (props: any) => {
     const resetUser = (redirectPath?: string) => {
         removeCookie('user_info');
         removeCookie('question_history');
+        removeCookie('result');
         redirectPath && window.location.assign(redirectPath);
     };
 

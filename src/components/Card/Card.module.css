@@ -21,7 +21,6 @@
     margin-top: 1rem;
 }
 .container .footer {
-    /* background-color: yellow; */
     border-top: solid 1px lightgrey;
     padding-top: 0.8rem;
     display: flex;
@@ -29,6 +28,17 @@
     column-gap: 0.5rem;
 }
 
-/* .footer Button {
-    margin-left: 0.5rem;
-} */
+.progressbarcontainer {
+    background-color: lightgray;
+    border-radius: 0.5rem;
+    height: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progressbar {
+    background-color: #3498db;
+    min-height: 0.5rem;
+    border-radius: 0.5rem;
+    transition: ease-in-out 0.3s;
+}

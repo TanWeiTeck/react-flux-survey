@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import UserContext from './contexts/UserContext';
 import QuestionPage from './views/QuestionPage/QuestionPage';
+import ResultPage from './views/ResultPage/ResultPage';
 import WelcomePage from './views/WelcomePage/WelcomePage';
 
 function App() {
@@ -20,6 +21,16 @@ function App() {
                                 <Navigate to={'/'} replace />
                             ) : (
                                 <QuestionPage />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/result"
+                        element={
+                            !(userInfo.email && userInfo.name) ? (
+                                <Navigate to={'/'} replace />
+                            ) : (
+                                <ResultPage />
                             )
                         }
                     />
