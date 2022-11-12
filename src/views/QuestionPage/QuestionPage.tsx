@@ -1,34 +1,44 @@
 import { useContext } from 'react';
-import Card from '../../components/Card/Card';
-import QuestionContext, {
-    QuestionListType,
-} from '../../contexts/QuestionContext';
+import { useNavigate } from 'react-router-dom';
+
 import UserContext from '../../contexts/UserContext';
+import QuestionContext from '../../contexts/QuestionContext';
+
+import Card from '../../components/Card/Card';
 import styles from './QuestionPage.module.css';
 
 const QuestionPage = () => {
+    const navigate = useNavigate();
+
+    const { resetUser } = useContext(UserContext);
     const {
-        question,
         maxQuestions,
-        questionIndex,
-        setQuestionIndex,
-        setSelection,
+        currentQuestionIndex,
+        currentQuestion,
+        currentProgress,
+        setCurrentIndex,
+        setSelectedAnswer,
         updateResult,
     } = useContext(QuestionContext);
 
-    const { resetUser } = useContext(UserContext);
-    const cardContent = (options: QuestionListType['options']) => (
+    const lastQuestion = maxQuestions === currentQuestionIndex + 1;
+    const firstQuestion = currentQuestionIndex === 0;
+
+    const cardContent = (
         <>
-            {options.map((item) => (
-                <label className={styles.option} key={item.id + questionIndex}>
+            {currentQuestion.options.map((item) => (
+                <label
+                    className={styles.option}
+                    key={currentQuestionIndex + item.id}
+                >
                     <input
                         type="radio"
-                        name={question.id.toString()}
+                        name={currentQuestion.id.toString()}
                         id={item.id}
                         value={item.value}
                         required
                         onChange={(event) => {
-                            setSelection(event.target.value === 'true');
+                            setSelectedAnswer(event.target.value === 'true');
                         }}
                     />
                     <div>{item.label}</div>
@@ -37,40 +47,46 @@ const QuestionPage = () => {
         </>
     );
 
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
+    const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault();
         updateResult();
-        if (maxQuestions !== questionIndex + 1) {
-            setQuestionIndex(questionIndex + 1);
+
+        if (lastQuestion) {
+            navigate('/result', { replace: true });
+            setCurrentIndex(0);
         } else {
-            setQuestionIndex(0);
-            window.location.assign('/result');
+            setCurrentIndex(currentQuestionIndex + 1);
         }
     };
 
     const handleBack = () => {
         updateResult('revert');
-        if (questionIndex === 0) {
+
+        if (firstQuestion) {
             resetUser('/');
         } else {
-            setQuestionIndex(questionIndex - 1);
+            setCurrentIndex(currentQuestionIndex - 1);
         }
     };
 
-    const progressPercentage =
-        ((+questionIndex + 1) / +maxQuestions) * 100 + '%';
+    const cardSubTitle = (
+        <div className={styles.subtitle}>
+            <div className={styles.number}>Q{currentQuestionIndex + 1}: </div>
+            <div className={styles.question}>{currentQuestion.title}</div>
+        </div>
+    );
 
     return (
         <>
             <Card
-                subTitle={question.title}
-                content={cardContent(question.options)}
+                subTitle={cardSubTitle}
+                content={cardContent}
                 okText={'next'}
+                onSubmit={handleSubmit}
                 cancelText={'back'}
                 onCancel={handleBack}
-                onSubmit={handleSubmit}
                 progressBar={true}
-                progress={progressPercentage}
+                progress={currentProgress}
             />
         </>
     );

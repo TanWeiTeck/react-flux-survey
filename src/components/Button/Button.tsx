@@ -4,11 +4,11 @@ type ButtonProps = {
     color?: string;
     type: 'submit' | 'button' | 'reset';
     disabled?: boolean;
-    children?: JSX.Element;
+    children?: JSX.Element | string;
     onClick?: () => void;
 };
 
-const Button = ({ ...props }: ButtonProps) => {
+const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     return (
         <button
             className={props.color}

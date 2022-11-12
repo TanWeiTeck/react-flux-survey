@@ -24,3 +24,12 @@ input[type='radio']:checked {
     background-color: black;
     transition: ease-in-out 0.3s;
 }
+
+.subtitle {
+    display: flex;
+    column-gap: 0.5rem;
+}
+
+.subtitle .number {
+    font-weight: 700;
+}

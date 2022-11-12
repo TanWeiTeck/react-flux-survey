@@ -1,7 +1,7 @@
 button {
-    background-color: black;
     padding: 0.6rem 2.5rem;
     color: white;
+    background-color: black;
     border: 1px solid black;
     text-transform: uppercase;
     font-size: 0.6rem;
@@ -14,6 +14,7 @@ button {
 button:hover {
     background-color: rgb(55, 55, 55);
 }
+
 button[disabled='disabled'],
 button:disabled {
     opacity: 50%;

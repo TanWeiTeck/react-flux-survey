@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
 type UserInfoType = {
@@ -7,9 +7,9 @@ type UserInfoType = {
 };
 
 type UserContextType = {
-    resetUser: (redirectPath?: string) => void;
     userInfo: UserInfoType;
     setUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
+    resetUser: (redirectPath?: string) => void;
 };
 
 const UserContext = createContext<UserContextType>({
@@ -18,10 +18,10 @@ const UserContext = createContext<UserContextType>({
     setUserInfo: () => {},
 });
 
-export const UserContextProvider = (props: any) => {
+export const UserContextProvider = ({ children }: PropsWithChildren) => {
     const [cookies, setCookie, removeCookie] = useCookies([
         'user_info',
-        'question_history',
+        'question_index',
         'result',
     ]);
 
@@ -38,7 +38,7 @@ export const UserContextProvider = (props: any) => {
 
     const resetUser = (redirectPath?: string) => {
         removeCookie('user_info');
-        removeCookie('question_history');
+        removeCookie('question_index');
         removeCookie('result');
         redirectPath && window.location.assign(redirectPath);
     };
@@ -51,7 +51,7 @@ export const UserContextProvider = (props: any) => {
                 setUserInfo,
             }}
         >
-            {props.children}
+            {children}
         </UserContext.Provider>
     );
 };

@@ -6,13 +6,13 @@
     margin: auto;
     margin-top: 5rem;
 }
-.container .header {
+.header {
     text-align: left;
     padding-bottom: 1rem;
     border-bottom: solid 1px lightgrey;
 }
 
-.container .title {
+.title {
     font-size: large;
     font-weight: 700;
 }
@@ -20,7 +20,8 @@
 .container form {
     margin-top: 1rem;
 }
-.container .footer {
+
+.footer {
     border-top: solid 1px lightgrey;
     padding-top: 0.8rem;
     display: flex;
@@ -28,17 +29,8 @@
     column-gap: 0.5rem;
 }
 
-.progressbarcontainer {
-    background-color: lightgray;
-    border-radius: 0.5rem;
-    height: 0.5rem;
-    overflow: hidden;
-    margin-bottom: 0.5rem;
-}
-
-.progressbar {
-    background-color: #3498db;
-    min-height: 0.5rem;
-    border-radius: 0.5rem;
-    transition: ease-in-out 0.3s;
+.copyright {
+    font-size: 0.7rem;
+    color: grey;
+    margin: 0.2rem;
 }

@@ -1,9 +1,14 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, {
+    createContext,
+    PropsWithChildren,
+    useEffect,
+    useState,
+} from 'react';
 import { useCookies } from 'react-cookie';
 
-const questionList = [
+const questionList: QuestionItemType[] = [
     {
-        title: "Q1: A car engine's job is to:",
+        title: "A car engine's job is to?",
         id: 1,
         options: [
             { label: 'convert fuel into heat', value: 'false', id: '1' },
@@ -13,122 +18,183 @@ const questionList = [
         ],
     },
     {
-        title: "Q2: A car engine's job is to:",
+        title: 'What is the full form of ABS, a safety technology used in cars?',
         id: 2,
         options: [
-            { label: '2convert fuel into heat', value: 'false', id: '1' },
-            { label: '2convert fuel into motion', value: 'true', id: '2' },
-            { label: '2convert fuel into exhaust', value: 'false', id: '3' },
-            { label: '2decorate the car', value: 'false', id: '4' },
+            { label: 'All lock Braking System', value: 'false', id: '1' },
+            { label: 'Anti-lock Braking System', value: 'true', id: '2' },
+            { label: 'Anti Braking System', value: 'false', id: '3' },
+            { label: 'Anti-lock Braking Solution', value: 'false', id: '4' },
         ],
     },
     {
-        title: "Q3: A car engine's job is to:",
+        title: 'A Spark Plug is used to ignite the fuel in a Diesel Engine?',
         id: 3,
         options: [
-            { label: '3convert fuel into heat', value: 'false', id: '1' },
-            { label: '3convert fuel into motion', value: 'true', id: '2' },
-            { label: '3convert fuel into exhaust', value: 'false', id: '3' },
-            { label: '3decorate the car', value: 'false', id: '4' },
+            { label: 'True', value: 'true', id: '1' },
+            { label: 'False', value: 'false', id: '2' },
         ],
     },
     {
-        title: "Q4: A car engine's job is to:",
+        title: 'Which company owns the following brands: Bentley, Buggati, Lamborghini & Audi?',
         id: 4,
         options: [
-            { label: '4convert fuel into heat', value: 'false', id: '1' },
-            { label: '4convert fuel into motion', value: 'true', id: '2' },
-            { label: '4convert fuel into exhaust', value: 'false', id: '3' },
-            { label: '4decorate the car', value: 'false', id: '4' },
+            { label: 'Proton', value: 'false', id: '1' },
+            { label: 'Mercedes-Benz', value: 'false', id: '2' },
+            { label: 'Volkswagen', value: 'true', id: '3' },
+            { label: 'BMW', value: 'false', id: '4' },
         ],
     },
     {
-        title: "Q5: A car engine's job is to:",
+        title: 'Which amongst the following is a South Korean carmaker',
         id: 5,
         options: [
-            { label: '5convert fuel into heat', value: 'false', id: '1' },
-            { label: '5convert fuel into motion', value: 'true', id: '2' },
-            { label: '5convert fuel into exhaust', value: 'false', id: '3' },
-            { label: '5decorate the car', value: 'false', id: '4' },
+            { label: 'Mazda', value: 'false', id: '1' },
+            { label: 'Kia', value: 'true', id: '2' },
+            { label: 'Honda', value: 'false', id: '3' },
+            { label: 'Greely', value: 'false', id: '4' },
+        ],
+    },
+    {
+        title: 'Double Wishbone is a type of _______?',
+        id: 6,
+        options: [
+            { label: 'Brake', value: 'false', id: '1' },
+            { label: 'Engine', value: 'false', id: '2' },
+            { label: 'Tire', value: 'false', id: '3' },
+            { label: 'Suspension', value: 'true', id: '4' },
+        ],
+    },
+    {
+        title: 'The first modern three-point seat belt was developed by which carmaker?',
+        id: 7,
+        options: [
+            { label: 'SAAB ', value: 'false', id: '1' },
+            { label: 'Volvo', value: 'true', id: '2' },
+            { label: 'Ford', value: 'false', id: '3' },
+            { label: 'Toyota', value: 'false', id: '4' },
+        ],
+    },
+    {
+        title: 'What is the speed limit in Malaysia',
+        id: 8,
+        options: [
+            { label: '80km/h', value: 'false', id: '1' },
+            { label: '100km/h', value: 'false', id: '2' },
+            { label: '110km/h', value: 'true', id: '3' },
+            { label: '150km/h', value: 'false', id: '4' },
+        ],
+    },
+    {
+        title: 'Use of ____ in vehicle reduces pollution',
+        id: 9,
+        options: [
+            { label: 'Petro', value: 'false', id: '1' },
+            { label: 'Diesel', value: 'false', id: '2' },
+            { label: 'Lithium battery', value: 'false', id: '3' },
+            { label: 'Non of the above', value: 'true', id: '4' },
+        ],
+    },
+    {
+        title: 'What does a car spoiler do?',
+        id: 10,
+        options: [
+            { label: 'Give away the end of a film', value: 'false', id: '1' },
+            { label: 'Increase downforce', value: 'true', id: '2' },
+            { label: 'Increase top speed', value: 'false', id: '3' },
+            { label: 'Increase braking', value: 'false', id: '4' },
         ],
     },
 ];
 
-export type QuestionListType = {
+type QuestionItemType = {
     title: string;
     id: number;
     options: { label: string; value: string; id: string }[];
 };
 
 type QuestionContextType = {
-    questionIndex: number;
-    question: QuestionListType;
     maxQuestions: number;
-    setQuestionIndex: React.Dispatch<React.SetStateAction<number>>;
-    setSelection: React.Dispatch<React.SetStateAction<boolean>>;
-    updateResult: (revert?: 'revert') => void;
+    currentQuestionIndex: number;
+    currentQuestion: QuestionItemType;
+    currentProgress: number;
+    setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
+    setSelectedAnswer: React.Dispatch<React.SetStateAction<boolean>>;
+    updateResult: (condition?: 'revert') => void;
     result: { questionIndex: number; result: boolean }[] | [];
 };
+
 const QuestionContext = createContext<QuestionContextType>({
-    questionIndex: 0,
-    question: questionList[0],
     maxQuestions: questionList.length,
-    setQuestionIndex: () => {},
-    setSelection: () => {},
+    currentQuestionIndex: 0,
+    currentQuestion: questionList[0],
+    currentProgress: 0,
+    setCurrentIndex: () => {},
+    setSelectedAnswer: () => {},
     updateResult: () => {},
     result: [],
 });
 
-export const QuestionContextProvider = (props: any) => {
-    const [cookies, setCookie] = useCookies(['question_history', 'result']);
-    const [questionIndex, setQuestionIndex] = useState(
-        +cookies.question_history || 0
-    );
+export const QuestionContextProvider = ({ children }: PropsWithChildren) => {
+    const [cookies, setCookie] = useCookies(['question_index', 'result']);
 
-    const question = questionList[questionIndex];
-    const maxQuestions = questionList.length;
+    const [currentIndex, setCurrentIndex] = useState(
+        +cookies.question_index || 0
+    );
     const [result, setResult] = useState<QuestionContextType['result']>(
         cookies.result || []
     );
-
-    const [selection, setSelection] = useState(false);
+    const [selectedAnswer, setSelectedAnswer] = useState(false);
 
     useEffect(() => {
-        setCookie('question_history', questionIndex);
+        setCookie('question_index', currentIndex);
         setCookie('result', result);
-    }, [questionIndex, setCookie, result]);
+    }, [setCookie, currentIndex, result]);
 
-    const updateResult = (revert?: 'revert') => {
-        const newResult = revert
-            ? result.filter((item) => item.questionIndex !== questionIndex - 1)
-            : result &&
-              !result.some((item) => item.questionIndex === questionIndex)
-            ? [...result, { questionIndex: questionIndex, result: selection }]
-            : result?.map((item) => {
-                  if (item.questionIndex === questionIndex) {
-                      return { ...item, result: selection };
-                  }
-                  return item;
-              });
+    const removeResult = result.filter(
+        (item) => item.questionIndex !== currentIndex - 1
+    );
+    const isResultExist = result?.some(
+        (item) => item.questionIndex === currentIndex
+    );
+    const addNewResult = [
+        ...result,
+        { questionIndex: currentIndex, result: selectedAnswer },
+    ];
+    const mutateResult = result?.map((item) => {
+        if (item.questionIndex === currentIndex) {
+            return { ...item, result: selectedAnswer };
+        }
+        return item;
+    });
+
+    const updateResult = (condition: 'revert' | undefined) => {
+        const newResult =
+            condition === 'revert'
+                ? removeResult
+                : isResultExist
+                ? mutateResult
+                : addNewResult;
+
         setResult(newResult);
     };
+
+    const currentProgress = (currentIndex + 1) / questionList.length;
 
     return (
         <QuestionContext.Provider
             value={{
-                question,
-                questionIndex,
-                maxQuestions,
-                // setScore,
-                // score,
-                setQuestionIndex,
-                setSelection,
+                maxQuestions: questionList.length,
+                currentQuestionIndex: currentIndex,
+                currentQuestion: questionList[currentIndex],
+                currentProgress,
+                setCurrentIndex,
+                setSelectedAnswer,
                 updateResult,
                 result,
-                // getScore,
             }}
         >
-            {props.children}
+            {children}
         </QuestionContext.Provider>
     );
 };

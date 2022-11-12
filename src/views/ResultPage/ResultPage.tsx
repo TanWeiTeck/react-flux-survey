@@ -1,19 +1,21 @@
 import { useContext, useMemo, useState } from 'react';
-import Card from '../../components/Card/Card';
+
 import QuestionContext from '../../contexts/QuestionContext';
 import UserContext from '../../contexts/UserContext';
+
+import Card from '../../components/Card/Card';
 import styles from './ResultPage.module.css';
 
 const ResultPage = () => {
+    const [score, setScore] = useState(0);
     const { userInfo, resetUser } = useContext(UserContext);
     const { maxQuestions, result } = useContext(QuestionContext);
-    const [score, setScore] = useState(0);
 
     useMemo(() => {
         result.map(
             (item) => item.result === true && setScore((prev) => prev + 1)
         );
-    }, [result]);
+    }, [result, setScore]);
 
     const cardContent = (
         <>
@@ -30,13 +32,28 @@ const ResultPage = () => {
         </>
     );
 
+    const getCardTitle = () => {
+        const mark = score / maxQuestions;
+        let cardTitle = '';
+
+        if (mark === 1) {
+            cardTitle = 'Your are a car expert!!';
+        } else if (mark >= 0.7) {
+            cardTitle = 'Your are better than most of the people!';
+        } else if (mark >= 0.4) cardTitle = 'You are above Average!';
+        else cardTitle = 'No worry! You still get the voucher';
+
+        return cardTitle;
+    };
+
     return (
         <Card
-            title={'Your are a car expert!!'}
+            title={getCardTitle()}
             content={cardContent}
             okText={'restart'}
             onSubmit={resetUser}
             progressBar={true}
+            progress={1}
         />
     );
 };

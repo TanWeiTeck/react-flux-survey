@@ -1,19 +1,15 @@
 import { useContext } from 'react';
-import Card from '../../components/Card/Card';
 
-import styles from './WelcomePage.module.css';
 import UserContext from '../../contexts/UserContext';
+
+import Card from '../../components/Card/Card';
+import styles from './WelcomePage.module.css';
 
 const WelcomePage = () => {
     const { userInfo, setUserInfo, resetUser } = useContext(UserContext);
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        window.location.assign('/question');
-    };
-
     const validityCheck =
-        userInfo.name.trim().length > 3 &&
+        userInfo.name.trim().length > 2 &&
         userInfo.email.trim().length > 3 &&
         userInfo.email.includes('@')
             ? false
@@ -54,13 +50,18 @@ const WelcomePage = () => {
         </div>
     );
 
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        window.location.assign('/question');
+    };
+
     return (
         <Card
             title={'It only takes 5 minutes to earn Rm10 voucher.'}
             content={cardContent}
+            okText={'start'}
             onSubmit={handleSubmit}
             btnDisable={validityCheck}
-            okText={'start'}
         />
     );
 };
