@@ -147,8 +147,8 @@ export const QuestionContextProvider = ({ children }: PropsWithChildren) => {
     const [selectedAnswer, setSelectedAnswer] = useState(false);
 
     useEffect(() => {
-        setCookie('question_index', currentIndex);
-        setCookie('result', result);
+        setCookie('question_index', currentIndex, { maxAge: 259200 });
+        setCookie('result', result, { maxAge: 259200 });
     }, [setCookie, currentIndex, result]);
 
     const removeResult = result.filter(

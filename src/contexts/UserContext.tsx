@@ -33,7 +33,9 @@ export const UserContextProvider = ({ children }: PropsWithChildren) => {
     );
 
     useEffect(() => {
-        userInfo.name && userInfo.email && setCookie('user_info', userInfo);
+        userInfo.name &&
+            userInfo.email &&
+            setCookie('user_info', userInfo, { maxAge: 259200 });
     }, [userInfo, setCookie]);
 
     const resetUser = (redirectPath?: string) => {
